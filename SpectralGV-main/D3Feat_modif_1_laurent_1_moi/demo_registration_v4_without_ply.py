@@ -181,6 +181,7 @@ class RegTester:
             base_filename_name = os.path.splitext(os.path.basename(anc_id.decode("utf-8")))[0]
 
             base_filename = os.path.join(folder_rotation, base_filename_name)
+            import pdb; pdb.set_trace()
             if not os.path.exists(os.path.dirname(base_filename)):
                 os.makedirs(os.path.dirname(base_filename))
             self.save_or_append_npz(folder_rotation, base_filename_name, keypts_loc, anc_features, keypts_score)
