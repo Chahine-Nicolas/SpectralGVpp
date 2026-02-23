@@ -526,7 +526,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Evaluate MinkLoc model')
     parser.add_argument('--dataset_root', type=str, required=False, default='', help='Path to the dataset root')
     parser.add_argument('--path_model_D3Feat', type=str, required=False, default='' )
-    parser.add_argument('--dataset_type', type=str, required=False, default='kitti360', choices=['mulran', 'southbay', 'kitti', 'alita', 'kitti360','lidar', 'lidar_east', 'lidar_west'])
+    
+    parser.add_argument('--dataset_type', type=str, required=False, default='lidar_east', choices=['lidar_east', 'lidar_west'])
+
+    parser.add_argument('--eval_set_filepath', type=str, required=True, default='/SpectralGVpp/SpectralGV-main/datasets/lidar/lidarhd_v2.pickle')
+
     parser.add_argument('--voxel_size', type=float, default=0.1, help='Voxel size for point cloud downsampling')
     parser.add_argument('--reset_fichier', type=str2bool, default=False, help='reset des fichier (True/False)')
     parser.add_argument('--MEAN_SHIFT_p', type=bool, default=False, help='Use mean shift for point cloud downsampling')
@@ -535,27 +539,22 @@ if __name__ == '__main__':
     parser.add_argument('--debut', type=int, required=False, default=0,help='Index of the first point cloud to process.')
     
 
+    chemain_structure_donne = os.getenv("WORK")
+    print("chemain_structure_donne", chemain_structure_donne)
+
+
+
+
     args = parser.parse_args()
+
+
+    print("eval_set_filepath ", args.eval_set_filepath)
+    import pdb; pdb.set_trace()
+
+    
     if args.eval_set =='':
-        if args.dataset_type == 'kitti':
-            args.eval_set = 'kitti_00_eval_tout_map.pickle'
-        elif args.dataset_type == 'mulran':
-            print(args.mulran_sequence)
-            if args.mulran_sequence == 'sejong':
-                args.eval_set = 'test_Sejong01_Sejong02.pickle'
-            elif args.mulran_sequence == 'DCC' :
-                args.eval_set = 'test_DCC_01_DCC_02_10.0_5.pickle'
-        elif args.dataset_type == 'southbay':
-            args.eval_set = 'test_SunnyvaleBigloop_1.0_5.pickle'
-        elif args.dataset_type == 'alita':
-            args.eval_set = 'test_val_5_0.01_5.pickle'
-        elif args.dataset_type == 'kitti360':
-            args.eval_set = 'kitti360_09_3.0_eval.pickle'
-        elif args.dataset_type == 'lidar':
-            args.eval_set = 'lidar_eval_test.pickle'
-            #args.eval_set = 'test_pickle.pickle'
-        #ajout
-        elif args.dataset_type == 'lidar_east':
+
+        if args.dataset_type == 'lidar_east':
             args.eval_set = 'lidarhd_v2.pickle'
             eval_set_filepath = "/lustre/fswork/projects/rech/dki/ujo91el/code/SpectralGV_D3Feat/SpectralGV-main/datasets/lidar/lidarhd_v2.pickle"
         elif args.dataset_type == 'lidar_west':
