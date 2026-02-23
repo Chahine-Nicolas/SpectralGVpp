@@ -3,14 +3,16 @@
 #######################################################
 module load pytorch-gpu/py3/1.10.1
 
-export PYTHONUSERBASE=/lustre/fsn1/worksf/projects/rech/dki/ujo91el/envs/d3feat
+cd /SpectralGVpp/SpectralGV-main
 
-cd /lustre/fswork/projects/rech/dki/ujo91el/code/SpectralGV_D3Feat/SpectralGV-main
-
-source run_rotation.sh
-
---> Saving evaluation pickle: /lustre/fswork/projects/rech/dki/ujo91el/code/SpectralGV_D3Feat/SpectralGV-main/datasets/lidar/file_traitment.pickle
+```highlight
+source run_save_pickle_east
+```
 --> Saving evaluation pickle: /lustre/fswork/projects/rech/dki/ujo91el/code/SpectralGV_D3Feat/SpectralGV-main/datasets/lidar/lidarhd_v2.pickle
+
+```highlight
+source run_save_pickle_west
+```
 --> Saving evaluation pickle: /lustre/fswork/projects/rech/dki/ujo91el/code/SpectralGV_D3Feat/SpectralGV-main/datasets/lidar/lidarhd_v3.pickle
 #######################################################
 
