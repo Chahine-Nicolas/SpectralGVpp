@@ -18,6 +18,7 @@ from typing import List
 from pathlib import Path
 import shutil
 import os.path
+import json
 
 o3d.utility.set_verbosity_level(o3d.utility.VerbosityLevel.Error)
 
@@ -260,7 +261,7 @@ class D3Feat:
     A class to run D3Feat feature extraction on point cloud datasets.
     """
 
-    def __init__(self, model_path, dataset_root, eval_set_query, eval_set_map, MEAN_SHIFT_p=False, voxel_size=0.3, reset=False, file_rotation='',debut=0):
+    def __init__(self, model_path, dataset_root, eval_set_query, eval_set_map, dictio_path, MEAN_SHIFT_p=False, voxel_size=0.3, reset=False, folder_rotation='',debut=0,         retranche = 15000):
         """
         Initializes the D3Feat feature extractor.
 
@@ -286,8 +287,10 @@ class D3Feat:
         self.voxel_size = voxel_size
         self.reset = reset
         self.debut = debut
-        chemain_stokage_fichier = os.getenv("WORKSF")
-        self.folder_rotation = os.path.join(chemain_stokage_fichier, f'descripteur_D3Feat/{file_rotation}')
+
+        self.folder_rotation = folder_rotation 
+        self.dictio_path = dictio_path
+        
         if self.reset and os.path.exists(self.folder_rotation):
             shutil.rmtree(self.folder_rotation)
 
@@ -343,25 +346,12 @@ class D3Feat:
             name_point_cloud_files.append(os.path.join(self.env_path, bin_path, os.path.basename(e.rel_scan_filepath)[:-4] + ".bin"))
             #name_point_cloud_files.append(os.path.join(self.env_path, ply_path, os.path.basename(e.rel_scan_filepath)[:-4] + ".ply"))
    
-
-        #retranche = 10000000
-        retranche = 15000
-        
         print("self.debut, len(name_point_cloud_files)", self.debut, len(name_point_cloud_files))
-
         
-        import json
-        path = "/lustre/fsn1/worksf/projects/rech/dki/ujo91el/datas/lidarhd_v2/splits/dsi_train_list_part2.json"
-        #path ="/lustre/fsn1/worksf/projects/rech/dki/ujo91el/datas/lidarhd_v2/small_full_eval_list.json" # tile 5
-        path ="/lustre/fsn1/worksf/projects/rech/dki/ujo91el/datas/lidarhd_v2/dsi_eval_list.json" # 
-        path ="/lustre/fsn1/worksf/projects/rech/dki/ujo91el/datas/lidarhd_v2/splits/dsi_eval_list_part4.json"
         
-        with open(path, "r") as f:
+        with open(self.dictio_path, "r") as f:
             dataset_full = json.load(f)
 
-        #self.folder_rotation = "/lustre/fsn1/worksf/projects/rech/dki/ujo91el/descripteur_D3Feat/rotation"
-        self.folder_rotation = "/lustre/fsn1/projects/rech/dki/ujo91el/descripteur_D3Feat/lidarhd_v2_2m"
-        
         for i in tqdm(range(len(dataset_full))):
             print(i, dataset_full[i:i+1])
 
@@ -535,31 +525,41 @@ if __name__ == '__main__':
     parser.add_argument('--reset_fichier', type=str2bool, default=False, help='reset des fichier (True/False)')
     parser.add_argument('--MEAN_SHIFT_p', type=bool, default=False, help='Use mean shift for point cloud downsampling')
     parser.add_argument('--eval_set', type=str, required=False, default='', help='File name of the evaluation pickle (must be located in dataset_root')
-    parser.add_argument('--file_rotation', type=str, required=False, default='rotation',help='Path to the folder containing rotation data.')
+    parser.add_argument('--folder_rotation', type=str, required=False, default='rotation',help='Path to the folder containing rotation data.')
     parser.add_argument('--debut', type=int, required=False, default=0,help='Index of the first point cloud to process.')
+
     
+    parser.add_argument('--dictio_path', type=str, required=True, default='/lidarhd_v2/dsi_eval_list.json', help='PAth to dictionnary with pcd filename')
 
     chemain_structure_donne = os.getenv("WORK")
     print("chemain_structure_donne", chemain_structure_donne)
 
-
-
-
     args = parser.parse_args()
-
-
-    print("eval_set_filepath ", args.eval_set_filepath)
-    import pdb; pdb.set_trace()
 
     
     if args.eval_set =='':
-
         if args.dataset_type == 'lidar_east':
             args.eval_set = 'lidarhd_v2.pickle'
-            eval_set_filepath = "/lustre/fswork/projects/rech/dki/ujo91el/code/SpectralGV_D3Feat/SpectralGV-main/datasets/lidar/lidarhd_v2.pickle"
+            #eval_set_filepath = "/lustre/fswork/projects/rech/dki/ujo91el/code/SpectralGV_D3Feat/SpectralGV-main/datasets/lidar/lidarhd_v2.pickle"
         elif args.dataset_type == 'lidar_west':
             args.eval_set = 'lidarhd_v3.pickle'
-            eval_set_filepath = "/lustre/fswork/projects/rech/dki/ujo91el/code/SpectralGV_D3Feat/SpectralGV-main/datasets/lidar/lidarhd_v3.pickle"
+            #eval_set_filepath = "/lustre/fswork/projects/rech/dki/ujo91el/code/SpectralGV_D3Feat/SpectralGV-main/datasets/lidar/lidarhd_v3.pickle"
+
+    
+    eval_set_filepath = args.eval_set_filepath
+    print("eval_set_filepath ", eval_set_filepath)
+    
+    #args.folder_rotation = "/lustre/fsn1/projects/rech/dki/ujo91el/descripteur_D3Feat/lidarhd_v2_2m"
+
+    print("args.folder_rotation ",args.folder_rotation)
+
+        #path = "/lustre/fsn1/worksf/projects/rech/dki/ujo91el/datas/lidarhd_v2/splits/dsi_train_list_part2.json"
+        #path ="/lustre/fsn1/worksf/projects/rech/dki/ujo91el/datas/lidarhd_v2/small_full_eval_list.json" # tile 5
+        #path ="/lustre/fsn1/worksf/projects/rech/dki/ujo91el/datas/lidarhd_v2/dsi_eval_list.json" # 
+        #dictio_path ="/lustre/fsn1/worksf/projects/rech/dki/ujo91el/datas/lidarhd_v2/splits/dsi_eval_list_part4.json"
+
+
+    #args.folder_rotation = "/lustre/fsn1/projects/rech/dki/ujo91el/descripteur_D3Feat/lidarhd_v2_2m"
 
     #eval_set_filepath = os.path.join(os.path.dirname(__file__), '../datasets/',args.dataset_type, args.eval_set)
     
@@ -567,6 +567,5 @@ if __name__ == '__main__':
     eval_set.load(eval_set_filepath)
 
 
-    d3feat = D3Feat(args.path_model_D3Feat, args.dataset_root ,eval_set.query_set , eval_set.map_set , args.MEAN_SHIFT_p, args.voxel_size , args.reset_fichier ,args.file_rotation , args.debut )
+    d3feat = D3Feat(args.path_model_D3Feat, args.dataset_root, eval_set.query_set, eval_set.map_set,  args.dictio_path, args.MEAN_SHIFT_p, args.voxel_size, args.reset_fichier, args.folder_rotation, args.debut )
     d3feat.run()
-
