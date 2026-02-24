@@ -25,7 +25,7 @@ source d3feat_debug.sh
 ```
 --> Save D3Feat features 
 
-# Step 3 : Evaluate
+# Step 3 : Re-ranking
 
 cd /SpectralGVpp/SpectralGV-main/evaluation/LoGG3D-Net
 
