@@ -14,7 +14,7 @@ source run_save_pickle_west
 ```
 --> Saving evaluation pickle: /lustre/fswork/projects/rech/dki/ujo91el/code/SpectralGV_D3Feat/SpectralGV-main/datasets/lidar/lidarhd_v3.pickle
 
-# Step 2 : Saves D3Feat features
+# Step 2 : D3Feat features
 
 cd /SpectralGVpp/SpectralGV-main/D3Feat_modif_1_laurent_1_moi
 
