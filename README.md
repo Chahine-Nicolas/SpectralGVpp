@@ -1,5 +1,5 @@
 #######################################################
-# Step 1
+# Step 1 : Dataset preparation
 
 module load pytorch-gpu/py3/1.10.1
 
@@ -18,7 +18,7 @@ source run_save_pickle_west
 
 
 #######################################################
-# Step 2
+# Step 2 : Saves D3Feat features
 
 cd /SpectralGVpp/SpectralGV-main/D3Feat_modif_1_laurent_1_moi
 
@@ -29,7 +29,7 @@ source d3feat_debug.sh
 --> Save D3Feat features 
 
 #######################################################
-# Step 3
+# Step 3 : Evaluate
 
 cd /lustre/fswork/projects/rech/dki/ujo91el/code/SpectralGV_D3Feat/SpectralGV-main/evaluation/LoGG3D-Net
 
