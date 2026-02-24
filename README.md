@@ -1,6 +1,6 @@
 #######################################################
 # Step 1
-#######################################################
+
 module load pytorch-gpu/py3/1.10.1
 
 cd /SpectralGVpp/SpectralGV-main
@@ -14,12 +14,11 @@ source run_save_pickle_east
 source run_save_pickle_west
 ```
 --> Saving evaluation pickle: /lustre/fswork/projects/rech/dki/ujo91el/code/SpectralGV_D3Feat/SpectralGV-main/datasets/lidar/lidarhd_v3.pickle
-#######################################################
+
 
 
 #######################################################
 # Step 2
-#######################################################
 
 cd /SpectralGVpp/SpectralGV-main/D3Feat_modif_1_laurent_1_moi
 
@@ -31,7 +30,6 @@ source d3feat_debug.sh
 
 #######################################################
 # Step 3
-#######################################################
 
 cd /lustre/fswork/projects/rech/dki/ujo91el/code/SpectralGV_D3Feat/SpectralGV-main/evaluation/LoGG3D-Net
 
