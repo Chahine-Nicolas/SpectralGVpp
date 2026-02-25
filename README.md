@@ -18,12 +18,12 @@ source run_save_pickle_west
 
 # Step 2 : D3Feat features
 
-cd /SpectralGVpp/SpectralGV-main/D3Feat_modif_1_laurent_1_moi
+cd /SpectralGVpp/SpectralGV-main/D3feat_features
 
 module load tensorflow-gpu/py3/1.12
 
 ```highlight
-source d3feat_debug.sh
+source run_d3feat.sh
 ```
 --> Save D3Feat features 
 
