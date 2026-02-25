@@ -1,3 +1,5 @@
+This code derivates from the repository https://github.com/Deneuvi/SpectralGV_D3Feat/tree/main
+
 # Step 1 : Dataset preparation
 
 module load pytorch-gpu/py3/1.10.1
