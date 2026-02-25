@@ -1,4 +1,4 @@
-python -m pdb lancement_pipilene_rotation_zede.py \
+python -m pdb lancement_pipilene_rotation_v2_east.py \
 
     --file_rotation rotation \
     --name_descripteur_global descripteur_global_SGV_lidar_0_1_rotation \
