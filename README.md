@@ -1,6 +1,6 @@
 ## Overview
 
-![plot](https://github.com/Chahine-Nicolas/SpectralGVpp/rerank2-1.pdf?raw=true)
+![Pipeline](Pipeline.png)
 
 This code derivates from the repository https://github.com/Deneuvi/SpectralGV_D3Feat/tree/main
 
